@@ -45,6 +45,7 @@ WORKDIR /
 EXPOSE 2345
 
 ARG TARGETARCH
+COPY --from=builder /workspace /workspace
 COPY --from=builder /go/bin/dlv /usr/local/bin/dlv
 COPY --from=builder /workspace/manager-${TARGETARCH} /usr/local/bin/manager
 
