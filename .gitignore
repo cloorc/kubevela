@@ -32,7 +32,6 @@ _.yaml
 vendor/
 
 # Vscode files
-.vscode
 .history
 
 pkg/test/vela

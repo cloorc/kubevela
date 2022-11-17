@@ -1,0 +1,15 @@
+{
+  "go.toolsEnvVars": {
+    "GOPROXY": "https://mirrors.aliyun.com/goproxy/"
+  },
+  "files.associations": {
+    "*.json": "json",
+    "*.ts": "typescript",
+    "*.html": "html",
+    "*.scss": "scss",
+    "*.java": "java",
+    "*.yml": "yaml",
+    "*.ttml": "xml",
+    "*.ttss": "css"
+  }
+}

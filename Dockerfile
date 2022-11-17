@@ -42,6 +42,8 @@ RUN apk add --no-cache ca-certificates bash expat
 
 WORKDIR /
 
+EXPOSE 2345
+
 ARG TARGETARCH
 COPY --from=builder /go/bin/dlv /usr/local/bin/dlv
 COPY --from=builder /workspace/manager-${TARGETARCH} /usr/local/bin/manager
