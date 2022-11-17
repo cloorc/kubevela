@@ -28,8 +28,9 @@ ARG TARGETARCH
 ARG VERSION
 ARG GITVERSION
 RUN GO111MODULE=on CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} \
-    go build -a -ldflags "-s -w -X github.com/oam-dev/kubevela/version.VelaVersion=${VERSION:-undefined} -X github.com/oam-dev/kubevela/version.GitRevision=${GITVERSION:-undefined}" \
-    -o manager-${TARGETARCH} main.go
+    CGO_ENABLED=0 go install github.com/go-delve/delve/cmd/dlv@latest && \
+    CGO_ENABLED=0 go build -a -ldflags "-X github.com/oam-dev/kubevela/version.VelaVersion=${VERSION:-undefined} -X github.com/oam-dev/kubevela/version.GitRevision=${GITVERSION:-undefined}" \
+        -gcflags "all=-N -l" -o manager-${TARGETARCH} main.go
 
 # Use alpine as base image due to the discussion in issue #1448
 # You can replace distroless as minimal base image to package the manager binary
@@ -42,6 +43,7 @@ RUN apk add --no-cache ca-certificates bash expat
 WORKDIR /
 
 ARG TARGETARCH
+COPY --from=builder /go/bin/dlv /usr/local/bin/dlv
 COPY --from=builder /workspace/manager-${TARGETARCH} /usr/local/bin/manager
 
 COPY entrypoint.sh /usr/local/bin/
